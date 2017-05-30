@@ -8,7 +8,7 @@ namespace Codeception\Module;
 use Codeception\Module;
 use Elasticsearch\Client;
 
-class ElasticSearch extends Module
+class Elasticsearch extends Module
 {
     /** @var  \Elasticsearch\Client */
     private $elasticSearch;
