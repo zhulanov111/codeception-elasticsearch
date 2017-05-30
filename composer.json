@@ -1,5 +1,5 @@
 {
-	"name": "tadaspaplauskas/codeception-elasticsearch",
+    "name": "tadaspaplauskas/codeception-elasticsearch",
     "description": "Elastic Search Module for Codeception",
     "license": "gpl",
     "authors": [
@@ -7,12 +7,12 @@
             "name": "Jan Wyszynski",
             "email": "jan.wyszynki@gmail.com"
         },
-		{
-			"name": "Tadas Paplauskas"
-    	}
-	],
+        {
+            "name": "Tadas Paplauskas"
+        }
+    ],
     "require": {
-		"elasticsearch/elasticsearch": "~5.2"
+        "elasticsearch/elasticsearch": "~5.2"
     },
     "autoload": {
         "psr-4": {
