@@ -1,5 +1,5 @@
 {
-    "name": "jotweh/codeception-elasticsearch",
+	"name": "tadaspaplauskas/codeception-elasticsearch",
     "description": "Elastic Search Module for Codeception",
     "license": "gpl",
     "authors": [
