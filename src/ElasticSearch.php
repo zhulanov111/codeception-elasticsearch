@@ -1,7 +1,4 @@
 <?php
-/**
- * @author Jan Wyszynski
- */
 
 namespace Codeception\Module;
 
@@ -25,15 +22,6 @@ class Elasticsearch extends Module
         }
     }
 
-    /**
-     * check if an item exists in a given index
-     *
-     * @param string $index index name
-     * @param string $type item type
-     * @param string $id item id
-     *
-     * @return array
-     */
     public function seeItemExistsInElasticsearch($index, $type, $id)
     {
         return $this->client->exists(
@@ -45,16 +33,6 @@ class Elasticsearch extends Module
         );
     }
 
-
-    /**
-     * grab an item from search index
-     *
-     * @param null $index
-     * @param null $type
-     * @param string $queryString
-     *
-     * @return array
-     */
     public function grabAnItemFromElasticsearch($index = null, $type = null, $queryString = '*')
     {
         $result = $this->client->search(
