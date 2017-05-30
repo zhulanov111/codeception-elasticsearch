@@ -9,7 +9,8 @@
         },
 		{
 			"name": "Tadas Paplauskas"
-    ],
+    	}
+	],
     "require": {
 		"elasticsearch/elasticsearch": "~5.2"
     },
