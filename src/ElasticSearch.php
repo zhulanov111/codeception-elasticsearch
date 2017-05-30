@@ -6,28 +6,13 @@
 namespace Codeception\Module;
 
 use Codeception\Module;
-use Elasticsearch\Client;
+use Codeception\Lib\ModuleContainer;
+
+use Elasticsearch\ClientBuilder;
 
 class Elasticsearch extends Module
 {
-    /** @var  \Elasticsearch\Client */
-    private $elasticSearch;
-
-    public function __construct($config = null)
-    {
-        // terminology: see = isXyz => true/false, have = create, grab = get => data
-
-        if (!isset($config['hosts'])) {
-            throw new \Exception('please configure hosts for ElasticSearch codeception module');
-        }
-
-        if (isset($config['hosts']) && !is_array($config['hosts'])) {
-            $config['hosts'] = array($config['hosts']);
-        }
-        $this->config = (array)$config;
-
-        parent::__construct();
-    }
+    public $elasticsearch;
 
     public function _initialize()
     {
@@ -37,7 +22,9 @@ class Elasticsearch extends Module
          * dic - ES dictionary
          */
 
-        $this->elasticSearch = new Client($this->config);
+        $clientBuilder = ClientBuilder::create();
+        $clientBuilder->setHosts($this->_getConfig('hosts'));
+        $this->elasticsearch = $clientBuilder->build();      
     }
 
     /**
@@ -51,7 +38,7 @@ class Elasticsearch extends Module
      */
     public function seeItemExistsInElasticsearch($index, $type, $id)
     {
-        return $this->elasticSearch->exists(
+        return $this->elasticsearch->exists(
             [
                 'index' => $index,
                 'type' => $type,
@@ -72,7 +59,7 @@ class Elasticsearch extends Module
      */
     public function grabAnItemFromElasticsearch($index = null, $type = null, $queryString = '*')
     {
-        $result = $this->elasticSearch->search(
+        $result = $this->elasticsearch->search(
             [
                 'index' => $index,
                 'type' => $type,
@@ -84,6 +71,11 @@ class Elasticsearch extends Module
         return !empty($result['hits']['hits'])
             ? $result['hits']['hits'][0]['_source']
             : array();
+    }
+
+    public function seeInElasticsearch($params)
+    {
+        return $this->elasticsearch->exists($params);
     }
 
 
