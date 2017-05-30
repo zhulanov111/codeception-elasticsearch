@@ -75,7 +75,7 @@ class Elasticsearch extends Module
 
     public function seeInElasticsearch($params)
     {
-        return $this->elasticsearch->exists($params);
+        return $this->assertTrue($this->elasticsearch->exists($params), 'document exists');
     }
 
 
