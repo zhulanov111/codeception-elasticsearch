@@ -6,10 +6,12 @@
         {
             "name": "Jan Wyszynski",
             "email": "jan.wyszynki@gmail.com"
-        }
+        },
+		{
+			"name": "Tadas Paplauskas"
     ],
     "require": {
-        "elasticsearch/elasticsearch": "~1.0"
+		"elasticsearch/elasticsearch": "~5.2"
     },
     "autoload": {
         "psr-4": {
