@@ -78,5 +78,10 @@ class Elasticsearch extends Module
         return $this->assertTrue($this->elasticsearch->exists($params), 'document exists');
     }
 
+    public function dontSeeInElasticsearch($params)
+    {
+        return $this->assertFalse($this->elasticsearch->exists($params), 'document doesn\'t exist');
+    }
+
 
 }
