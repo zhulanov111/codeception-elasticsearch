@@ -18,10 +18,10 @@ class Elasticsearch extends Module
     {
         $clientBuilder = ClientBuilder::create();
         $clientBuilder->setHosts($this->_getConfig('hosts'));
-        $this->elasticsearch = $clientBuilder->build();
+        $this->client = $clientBuilder->build();
 
         if ($this->_getConfig('cleanup')) {
-            $this->elasticsearch->indices()->delete(['index' => '*']);
+            $this->client->indices()->delete(['index' => '*']);
         }
     }
 
@@ -36,7 +36,7 @@ class Elasticsearch extends Module
      */
     public function seeItemExistsInElasticsearch($index, $type, $id)
     {
-        return $this->elasticsearch->exists(
+        return $this->client->exists(
             [
                 'index' => $index,
                 'type' => $type,
@@ -57,7 +57,7 @@ class Elasticsearch extends Module
      */
     public function grabAnItemFromElasticsearch($index = null, $type = null, $queryString = '*')
     {
-        $result = $this->elasticsearch->search(
+        $result = $this->client->search(
             [
                 'index' => $index,
                 'type' => $type,
@@ -73,12 +73,12 @@ class Elasticsearch extends Module
 
     public function seeInElasticsearch($params)
     {
-        return $this->assertTrue($this->elasticsearch->exists($params), 'document exists');
+        return $this->assertTrue($this->client->exists($params), 'document exists');
     }
 
     public function dontSeeInElasticsearch($params)
     {
-        return $this->assertFalse($this->elasticsearch->exists($params), 'document doesn\'t exist');
+        return $this->assertFalse($this->client->exists($params), 'document doesn\'t exist');
     }
 
 
