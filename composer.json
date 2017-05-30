@@ -18,5 +18,6 @@
         "psr-4": {
             "Codeception\\Module\\": "src"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
