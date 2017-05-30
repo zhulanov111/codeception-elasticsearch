@@ -16,15 +16,13 @@ class Elasticsearch extends Module
 
     public function _initialize()
     {
-        /*
-         * elastic search config
-         * hosts - array of ES hosts
-         * dic - ES dictionary
-         */
-
         $clientBuilder = ClientBuilder::create();
         $clientBuilder->setHosts($this->_getConfig('hosts'));
-        $this->elasticsearch = $clientBuilder->build();      
+        $this->elasticsearch = $clientBuilder->build();
+
+        if ($this->_getConfig('cleanup')) {
+            $this->elasticsearch->indices()->delete(['index' => '*']);
+        }
     }
 
     /**
