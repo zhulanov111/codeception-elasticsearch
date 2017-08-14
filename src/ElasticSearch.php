@@ -22,18 +22,7 @@ class Elasticsearch extends Module
         }
     }
 
-    public function seeItemExistsInElasticsearch($index, $type, $id)
-    {
-        return $this->client->exists(
-            [
-                'index' => $index,
-                'type' => $type,
-                'id' => $id
-            ]
-        );
-    }
-
-    public function grabAnItemFromElasticsearch($index = null, $type = null, $queryString = '*')
+    public function grabFromElasticsearch($index = null, $type = null, $queryString = '*')
     {
         $result = $this->client->search(
             [
@@ -49,14 +38,36 @@ class Elasticsearch extends Module
             : array();
     }
 
-    public function seeInElasticsearch($params)
+    public function seeInElasticsearch($index, $type, $fields)
     {
-        return $this->assertTrue($this->client->exists($params), 'document exists');
+        $query = array_map(function ($value, $key) {
+            return ['match' => [$key => $value]];
+        }, $fields, array_keys($fields));
+
+        $result = $this->client->search([
+            'index' => $index,
+            'type' => $type,
+            'size' => 1,
+            'body' => ['query' => ['bool' => ['filter' => $query]]],
+        ]);
+
+        return $this->assertFalse(empty($result['hits']['hits']), 'item exists');
     }
 
-    public function dontSeeInElasticsearch($params)
+    public function dontSeeInElasticsearch($index, $type, $fields)
     {
-        return $this->assertFalse($this->client->exists($params), 'document doesn\'t exist');
+        $query = array_map(function ($value, $key) {
+            return ['match' => [$key => $value]];
+        }, $fields, array_keys($fields));
+
+        $result = $this->client->search([
+            'index' => $index,
+            'type' => $type,
+            'size' => 1,
+            'body' => ['query' => ['bool' => ['filter' => $query]]],
+        ]);
+
+        return $this->assertTrue(empty($result['hits']['hits']), 'item does not exist');
     }
 
 
