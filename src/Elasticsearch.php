@@ -38,37 +38,41 @@ class Elasticsearch extends Module
             : array();
     }
 
-    public function seeInElasticsearch($index, $type, $fields)
+    public function seeInElasticsearch($index, $type, $fieldsOrValue)
     {
-        $query = array_map(function ($value, $key) {
-            return ['match' => [$key => $value]];
-        }, $fields, array_keys($fields));
+        return $this->assertTrue($this->count($index, $type, $fieldsOrValue) > 0, 'item exists');
+    }
+
+    public function dontSeeInElasticsearch($index, $type, $fieldsOrValue)
+    {
+        return $this->assertTrue($this->count($index, $type, $fieldsOrValue) === 0,
+            'item does not exist');
+    }
+
+    protected function count($index, $type, $fieldsOrValue)
+    {
+        $query = [];
+
+        if (is_array($fieldsOrValue)) {
+            $query['bool']['filter'] = array_map(function ($value, $key) {
+                return ['match' => [$key => $value]];
+            }, $fieldsOrValue, array_keys($fieldsOrValue));
+        }
+        else {
+            $query['multi_match'] = [
+                'query' => $fieldsOrValue,
+                'fields' => 'all',
+            ];
+        }
 
         $result = $this->client->search([
             'index' => $index,
             'type' => $type,
             'size' => 1,
-            'body' => ['query' => ['bool' => ['filter' => $query]]],
+            'body' => ['query' => $query],
         ]);
 
-        return $this->assertFalse(empty($result['hits']['hits']), 'item exists');
+        return (int) $result['hits']['hits'];
     }
-
-    public function dontSeeInElasticsearch($index, $type, $fields)
-    {
-        $query = array_map(function ($value, $key) {
-            return ['match' => [$key => $value]];
-        }, $fields, array_keys($fields));
-
-        $result = $this->client->search([
-            'index' => $index,
-            'type' => $type,
-            'size' => 1,
-            'body' => ['query' => ['bool' => ['filter' => $query]]],
-        ]);
-
-        return $this->assertTrue(empty($result['hits']['hits']), 'item does not exist');
-    }
-
 
 }
