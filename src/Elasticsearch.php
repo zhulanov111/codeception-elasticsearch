@@ -61,7 +61,7 @@ class Elasticsearch extends Module
         else {
             $query['multi_match'] = [
                 'query' => $fieldsOrValue,
-                'fields' => 'all',
+                'fields' => '_all',
             ];
         }
 
