@@ -65,14 +65,27 @@ class Elasticsearch extends Module
             ];
         }
 
-        $result = $this->client->search([
+        $params = [
             'index' => $index,
             'type' => $type,
             'size' => 1,
             'body' => ['query' => $query],
-        ]);
+        ];
 
-        return (int) $result['hits']['hits'];
+        $this->client->indices()->refresh();
+
+        $result = $this->client->search($params);
+
+        return (int) $result['hits']['total'];
+    }
+
+    public function haveInElasticsearch($document)
+    {
+        $result = $this->client->index($document);
+
+        $this->client->indices()->refresh();
+
+        return $result;
     }
 
 }
