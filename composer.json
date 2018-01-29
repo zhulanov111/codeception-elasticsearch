@@ -1,7 +1,7 @@
 {
     "name": "tadaspaplauskas/codeception-elasticsearch",
     "description": "Elastic Search Module for Codeception",
-    "license": "gpl",
+    "license": "MIT",
     "authors": [
         {
             "name": "Jan Wyszynski",
@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "elasticsearch/elasticsearch": "*"
+        "elasticsearch/elasticsearch": "~2"
     },
     "autoload": {
         "psr-4": {
