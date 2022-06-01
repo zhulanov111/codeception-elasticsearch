@@ -1,0 +1,1 @@
+# Codeception module for Elasticsearch
