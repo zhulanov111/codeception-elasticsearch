@@ -1,5 +1,5 @@
 {
-    "name": "tadaspaplauskas/codeception-elasticsearch",
+    "name": "zhulanov111/codeception-elasticsearch",
     "description": "Elastic Search Module for Codeception",
     "license": "MIT",
     "authors": [
@@ -12,12 +12,11 @@
         }
     ],
     "require": {
-        "elasticsearch/elasticsearch": "dev-master"
+        "elasticsearch/elasticsearch": "^8.2"
     },
     "autoload": {
         "psr-4": {
             "Codeception\\Module\\": "src"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
