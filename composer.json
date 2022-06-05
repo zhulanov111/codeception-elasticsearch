@@ -9,10 +9,15 @@
         },
         {
             "name": "Tadas Paplauskas"
+        },
+        {
+            "name": "Konstanin Zhulanov",
+            "email": "zhulanov111@gmail.com"
         }
     ],
+    "version": "dev-master",
     "require": {
-        "elasticsearch/elasticsearch": "^8.2"
+        "elasticsearch/elasticsearch": "^7.17"
     },
     "autoload": {
         "psr-4": {
