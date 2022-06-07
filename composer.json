@@ -17,7 +17,7 @@
     ],
     "version": "dev-master",
     "require": {
-        "elasticsearch/elasticsearch": "7.10.0"
+        "elasticsearch/elasticsearch": "^7.17"
     },
     "autoload": {
         "psr-4": {
